@@ -1,0 +1,52 @@
+.dropdown-item.active{
+    font-weight: 600;
+    color: #212529;
+    background-color: transparent;
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Cpath fill='%23292b2c' d='M2.3 6.73L.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: .4rem .6rem;
+    background-size: .75rem .75rem;
+}
+
+.rm-decorations{
+    color: inherit;
+    text-decoration: none !important;
+}
+
+input.form-control,
+select.form-control,
+textarea.form-control{
+    border-width: 0 0 1px 0;
+    border-radius: 1px;
+    padding: 0;
+    height: 28px;
+}
+
+textarea.form-control{
+    height: inherit;
+}
+
+.form-control:focus {
+    color: #495057;
+    background-color: #fff;
+    border-color: #80bdff;
+    outline: 0;
+    box-shadow: none;
+}
+
+div.dropdown-toggle{
+    cursor: pointer;
+}
+
+.btn-icon{
+    background: transparent;
+    border: none;
+    height: 25px;
+    line-height: 10px;
+    padding: 5px;
+}
+
+.vote-score{
+    right: 0;
+    top: 0;
+}
