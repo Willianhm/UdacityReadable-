@@ -6,7 +6,7 @@ import { handleAddPost, handleEditPost } from '../actions/posts';
 
 import Title from './Title';    
 
-class newPost extends Component {
+class NewPost extends Component {
     state = {
         title: '',
         body: '',
@@ -22,16 +22,15 @@ class newPost extends Component {
         }
     }
     
-    componentWillReceiveProps(newProps){
-        if(newProps.post.id !== this.props.post.id){
+    componentDidUpdate(newProps){
+        if(newProps.post.id && newProps.post.id !== this.props.post.id){
             this.setPost(newProps.post);
         }
     }
 
     setPost(post){
-        const { title, body, author, category} = post;
-        this.setState(state => ({
-            ...state,
+        const { title, body, author, category } = post;
+        this.setState(() => ({
             title,
             body,
             author,
@@ -41,16 +40,15 @@ class newPost extends Component {
 
     handleChange = (e) => {
         const { value, name } = e.target;
-        this.setState(state => ({ ...state, [name]: value }));
+        this.setState(() => ({ [name]: value }));
     }
 
     handleSubmit = (e) => {
         e.preventDefault();
         const { title, body, author, category } = this.state;
         if (!title || !body || !author || !category) {
-            this.setState((state) => ({ ...state, showError: true }));
+            this.setState(() => ({ showError: true }));
         } else {
-            const { dispatch } = this.props;
             const { post } = this.props.match.params;
             const newPost = {
                 title, 
@@ -62,20 +60,21 @@ class newPost extends Component {
             };
             if(post){
                 newPost.id = post;
-                dispatch(handleEditPost(newPost));
-                this.props.history.goBack();
+                this.props.handleEditPost(newPost).then(() => {
+                    this.props.history.goBack();
+                });
             }else{
-                dispatch(handleAddPost(newPost));
-                this.setState((state) => ({
-                    ...state,
-                    toHome: true
-                }));
+                this.props.handleAddPost(newPost).then(() => {
+                    this.setState(() => ({
+                        toHome: true
+                    }));
+                });
             }
         }
     }
 
     closeToast = () =>{
-        this.setState((state) => ({ ...state, showError: false }));
+        this.setState(() => ({ showError: false }));
     }
 
     cancel = () => {
@@ -200,4 +199,11 @@ function mapStateToProps({ posts, categories }, props) {
     }
 }
 
-export default withRouter(connect(mapStateToProps)(newPost));
+const mapDispatchToProps = dispatch => {
+    return {
+        handleEditPost: (post) => dispatch(handleEditPost(post)),
+        handleAddPost: (post) => dispatch(handleAddPost(post))
+    }
+}
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(NewPost));

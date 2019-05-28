@@ -13,17 +13,16 @@ class Comment extends Component {
 
     handleVoteScore(type){
         const { comment } = this.props;
-        this.props.dispatch(handleVoteScore(comment, type));
+        this.props.handleVoteScore(comment, type);
     }
 
     handleDeletePost(){
-        const { comment, dispatch } = this.props;
-        dispatch(handleDeleteComment(comment));
+        this.props.handleDeleteComment(this.props.comment);
     }
     
     handleEditPost(){
         const { isEditing } = this.state;
-        this.setState((state) => ({ ...state, isEditing: !isEditing }));
+        this.setState(() => ({ isEditing: !isEditing }));
     }
 
     render() {
@@ -34,7 +33,7 @@ class Comment extends Component {
                 {
                     isEditing 
                     ? <NewComment 
-                        isEditing={true}
+                        isEditing
                         comment={comment}
                         cancelEdit={()=> this.handleEditPost()}/>
                     : <Card 
@@ -48,4 +47,11 @@ class Comment extends Component {
     }
 }
 
-export default connect()(Comment);
+const mapDispatchToProps = dispatch => {
+    return {
+        handleVoteScore: (comment, type) => dispatch(handleVoteScore(comment, type)),
+        handleDeleteComment: (comment) => dispatch(handleDeleteComment(comment))
+    }
+}
+
+export default connect(null, mapDispatchToProps)(Comment);

@@ -11,7 +11,7 @@ const orders = [
 
 class NavActionButtons extends Component{
     changeOrder(order){
-        this.props.dispatch(changeOrder(order));
+        this.props.changeOrder(order);
     }
 
     renderOrders(){
@@ -32,7 +32,7 @@ class NavActionButtons extends Component{
         return categories.map(categorie => (
             <Link 
                 key={categorie.path}
-                to={`/c/${categorie.path}`}
+                to={`/${categorie.path}`}
                 className={`dropdown-item ${categorie.path === category ? "active" : ""}`} >
                 {categorie.name}
             </Link>
@@ -84,4 +84,10 @@ function mapStateToProps({ order, categories }){
     }
 }
 
-export default withRouter(connect(mapStateToProps)(NavActionButtons));
+const mapDispatchToProps = dispatch => {
+    return {
+        changeOrder: (order) => dispatch(changeOrder(order))
+    }
+}
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(NavActionButtons));

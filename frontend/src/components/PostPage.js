@@ -10,7 +10,7 @@ import NewComment from './NewComment';
 
 class PostPage extends Component {
     componentDidMount(){
-        this.props.dispatch(handleGetComments(this.props.match.params.post));
+        this.props.handleGetComments(this.props.match.params.post);
     }
 
     renderComment(){
@@ -31,6 +31,8 @@ class PostPage extends Component {
 
         return (
             <div className="mt-2">
+
+                
                 <Post
                     post={post}
                     isInfo={true} />
@@ -50,4 +52,10 @@ function mapStateToProps({ posts, comments }, props) {
     }
 }
 
-export default withRouter(connect(mapStateToProps)(PostPage));
+const mapDispatchToProps = dispatch => {
+    return {
+        handleGetComments: (post) => dispatch(handleGetComments(post))
+    }
+}
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(PostPage));

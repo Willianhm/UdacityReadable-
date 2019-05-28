@@ -12,7 +12,7 @@ import { handleInitialData } from '../actions/shared';
 
 class App extends Component {
   componentDidMount() {
-    this.props.dispatch(handleInitialData());
+    this.props.handleInitialData();
   }
 
   render() {
@@ -24,15 +24,17 @@ class App extends Component {
           <div className='container-fluid'>
             <div className="row flex-xl-nowrap">
               <main className="col-12 pr-5 pl-5 bd-content">
-                {this.props.loading === true
-                  ? null
-                  : <div>
-                    <Route path='/' exact component={Dashboard} />
-                    <Route path='/c/:category' component={Dashboard} />
-                    <Route path='/p/:post' component={PostPage} />
-                    <Route path='/new' component={NewPost} />
-                    <Route path='/edit/:post' component={NewPost} />
-                  </div>}
+                {!this.props.loading && 
+                  (
+                    <div>
+                      <Route path='/' exact component={Dashboard} />
+                      <Route path='/:category' exact component={Dashboard} />
+                      <Route path='/:category/:post' component={PostPage} />
+                      {/* <Route path='/new' component={NewPost} />
+                      <Route path='/edit/:post' component={NewPost} /> */}
+                    </div>
+                  )
+                }
               </main>
             </div>
           </div>
@@ -42,4 +44,10 @@ class App extends Component {
   }
 }
 
-export default connect()(App);
+const mapDispatchToProps = dispatch => {
+  return {
+    handleInitialData: () => dispatch(handleInitialData())
+  }
+}
+
+export default connect(null, mapDispatchToProps)(App);

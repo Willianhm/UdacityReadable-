@@ -10,7 +10,7 @@ class Dashboard extends Component {
     renderPosts(posts) {
         return posts.map((post, index) =>(
             <Link
-                to={`/p/${post.id}`}
+                to={`/${post.category}/${post.id}`}
                 key={index} 
                 className="rm-decorations">
                 <Post 

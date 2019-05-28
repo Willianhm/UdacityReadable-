@@ -39,7 +39,6 @@ export function handleAddPost(post) {
     return _savePost(post, 'post')
       .catch(() => {
         alert("Error on add post");
-        window.location.reload();
       });
   }
 }
@@ -57,7 +56,6 @@ export function handleEditPost(post) {
     return _savePost(post, 'put')
       .catch(() => {
         alert("Error on edit post");
-        window.location.reload();
       });
   }
 }
@@ -77,7 +75,6 @@ export function handleDeletePost(post) {
       return _deletePost(post.id)
         .catch(() => {
           alert("Error on delete post");
-          window.location.reload();
         });
     }
   }
@@ -97,7 +94,6 @@ export function handleVoteScore(post, option) {
     return _votePost(post, option)
           .catch(() => {
             alert("Error on vote post");
-            window.location.reload();
           });
   };
 }

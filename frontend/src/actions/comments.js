@@ -41,7 +41,6 @@ export function handleAddComment(comment) {
         return _saveComment(comment, 'post')
             .catch(() => {
                 alert("Error on add comment");
-                window.location.reload();
             });
     }
 }
@@ -59,7 +58,6 @@ export function handleEditComment(comment) {
         return _saveComment(comment, 'put')
             .catch(() => {
                 alert("Error on edit comment");
-                window.location.reload();
             });
     }
 }
@@ -79,7 +77,6 @@ export function handleDeleteComment(comment){
             return _deleteComment(comment.id)
                 .catch(() => {
                     alert("Error on delete comment");
-                    window.location.reload();
                 });
         }
     }
@@ -99,7 +96,6 @@ export function handleVoteScore(comment, option) {
         return _voteComment(comment, option)
             .catch(() => {
                 alert("Error on vote comment");
-                window.location.reload();
             });
     };
 }

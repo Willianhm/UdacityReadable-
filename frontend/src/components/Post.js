@@ -8,12 +8,12 @@ import Card from './Card';
 class Post extends Component {
     handleVoteScore(type){
         const { post } = this.props;
-        this.props.dispatch(handleVoteScore(post, type));
+        this.props.handleVoteScore(post, type);
     }
 
     handleDeletePost(){
-        const { post, dispatch, match, history } = this.props;
-        dispatch(handleDeletePost(post));
+        const { post, handleDeletePost, match, history } = this.props;
+        handleDeletePost(post);
         if(match.params.post){
             history.push('/');
         }
@@ -36,4 +36,11 @@ class Post extends Component {
     }
 }
 
-export default withRouter(connect()(Post));
+const mapDispatchToProps = dispatch => {
+    return {
+        handleVoteScore: (post, type) => dispatch(handleVoteScore(post, type)),
+        handleDeletePost: (post) => dispatch(handleDeletePost(post))
+    }
+}
+
+export default withRouter(connect(null, mapDispatchToProps)(Post));

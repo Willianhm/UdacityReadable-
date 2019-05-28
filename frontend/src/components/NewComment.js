@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import { handleAddComment, handleEditComment } from '../actions/comments';
 
-class newComment extends Component {
+class NewComment extends Component {
     constructor(props){
         super(props);
         this.state = {
@@ -16,8 +16,7 @@ class newComment extends Component {
     componentDidMount(){
         const { comment } = this.props;
         if(comment){
-            this.setState((state) => ({
-                ...state,
+            this.setState(() => ({
                 author: comment.author,
                 body: comment.body
             }));
@@ -26,13 +25,13 @@ class newComment extends Component {
 
     handleChange = (e) => {
         const { value, name } = e.target;
-        this.setState(state => ({ ...state, [name]: value }));
+        this.setState(() => ({ [name]: value }));
     }
 
     handleSubmit = (e) => {
         e.preventDefault();
         const { author, body } = this.state;
-        const { dispatch, postId, comment } = this.props;
+        const { postId, comment } = this.props;
         const newComment = {
             body,
             author, 
@@ -43,11 +42,13 @@ class newComment extends Component {
         if(comment){
             newComment.id = comment.id;
             newComment.voteScore = comment.voteScore;
-            this.props.cancelEdit();
-            dispatch(handleEditComment(newComment));
+            this.props.handleEditComment(newComment).then(() => {
+                this.props.cancelEdit();
+            })
         }else{
-            dispatch(handleAddComment(newComment));
-            this.setState((state) => ({ ...state, author: '', body: '' }));
+            this.props.handleAddComment(newComment).then(() => {
+                this.setState(() => ({ author: '', body: '' }));
+            });
         }
     }
 
@@ -104,4 +105,11 @@ class newComment extends Component {
     }
 }
 
-export default connect()(newComment);
+const mapDispatchToProps = dispatch => {
+    return {
+        handleEditComment: (comment) => dispatch(handleEditComment(comment)),
+        handleAddComment: (comment) => dispatch(handleAddComment(comment))
+    }
+}
+
+export default connect(null, mapDispatchToProps)(NewComment);
