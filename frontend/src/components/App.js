@@ -21,6 +21,7 @@ class App extends Component {
         <Fragment>
           <LoadingBar />
           <Nav />
+          <NewPost />
           <div className='container-fluid'>
             <div className="row flex-xl-nowrap">
               <main className="col-12 pr-5 pl-5 bd-content">
@@ -30,8 +31,6 @@ class App extends Component {
                       <Route path='/' exact component={Dashboard} />
                       <Route path='/:category' exact component={Dashboard} />
                       <Route path='/:category/:post' component={PostPage} />
-                      {/* <Route path='/new' component={NewPost} />
-                      <Route path='/edit/:post' component={NewPost} /> */}
                     </div>
                   )
                 }

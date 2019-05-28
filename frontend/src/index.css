@@ -50,3 +50,8 @@ div.dropdown-toggle{
     right: 0;
     top: 0;
 }
+
+.modal.show{
+    background: #0000003b;
+    display: block;
+}

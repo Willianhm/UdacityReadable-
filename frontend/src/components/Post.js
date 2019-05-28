@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { handleVoteScore, handleDeletePost } from '../actions/posts';
 
+import { openModal } from '../actions/modal';
+
 import Card from './Card';
 
 class Post extends Component {
@@ -20,8 +22,9 @@ class Post extends Component {
     }
     
     handleEditPost(){
-        const { post, history } = this.props;
-        history.push(`/edit/${post.id}`);
+        const { post, openModal } = this.props;
+        openModal(post);
+        // history.push(`/edit/${post.id}`);
     }
 
     render() {
@@ -39,7 +42,8 @@ class Post extends Component {
 const mapDispatchToProps = dispatch => {
     return {
         handleVoteScore: (post, type) => dispatch(handleVoteScore(post, type)),
-        handleDeletePost: (post) => dispatch(handleDeletePost(post))
+        handleDeletePost: (post) => dispatch(handleDeletePost(post)),
+        openModal: (post) => dispatch(openModal(post))
     }
 }
 
