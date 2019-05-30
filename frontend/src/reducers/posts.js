@@ -24,13 +24,11 @@ export default function posts(state = [], action) {
     case EDIT_POST:
       list = state.map(p => {
         if (p.id === post.id) {
-          p = { ...post };
+          return post;
         }
         return p;
       });
-      return [
-        ...list
-      ];
+      return list;
     case DELETE_POST:
       list = state.filter(p => p.id !== post.id);
       return [
@@ -38,10 +36,12 @@ export default function posts(state = [], action) {
       ];
     case HANDLE_VOTE_SCORE:
       post.voteScore = option === 'upVote' ? post.voteScore + 1 : post.voteScore - 1;
-      state[state.indexOf(post)] = { ...post };
-      return [
-        ...state
-      ]
+	  return state.map(statePost => {
+		if (statePost.id === post.id) {
+			return post
+		}
+		return statePost
+	})
     case HANDLE_COMMENT_COUNT:
       list = state.map(p => {
         if (p.id === id) {
